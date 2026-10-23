@@ -6,7 +6,7 @@
 
 ## Naming conventions
 
-- Follow Rust conventions: Rust source files and module directories use snake_case (e.g. `src/repository_scanner.rs`, `src/repository_cleaner/`).
+- Follow Rust conventions: Rust source files and module directories use snake_case (e.g. `src/file_parser.rs`, `src/user_settings/`).
 - All other files and directories use kebab-case (e.g. `docs/getting-started.md`, `scripts/`).
 - Standard names keep their conventional form (e.g. `Cargo.toml`, `README.md`, `CLAUDE.md`).
 - File and directory names must be in English.
@@ -30,7 +30,7 @@
 - Never commit or push directly to `main`.
 - For each task, create a dedicated branch from `main`, commit and push only on that branch.
 - Every change must go through a pull request targeting `main`.
-- Name branches `<type>/<short-description>` in kebab-case, using the commit types below (e.g. `feat/translations`, `fix/config-write`).
+- Name branches `<type>/<short-description>` in kebab-case, using the commit types below (e.g. `feat/dark-mode`, `fix/settings-save`).
 - Never switch branches in the main project directory while the owner may be testing a branch there (for example with `cargo run`): it would change the code they run. Work on any other branch in a separate Git worktree outside the project (`git worktree add <directory> -b <branch> origin/main`), and remove it with `git worktree remove <directory>` once the work is pushed.
 
 ## Commit messages
@@ -59,13 +59,13 @@ Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.
 | `chore` | Other maintenance (tooling, `.gitignore`, Claude Code agents). |
 | `revert` | Reverting a previous commit. |
 
-- Scope: optional, the module or area concerned (e.g. `feat(config): ...`, `fix(github): ...`).
-- Description: imperative mood, lowercase, no final period, 72 characters max (e.g. `feat(config): save config.toml atomically`).
-- Breaking change: add `!` after the type or scope (e.g. `feat(config)!: ...`) and explain it in a `BREAKING CHANGE:` footer.
+- Scope: optional, the module or area concerned (e.g. `feat(settings): ...`, `fix(parser): ...`).
+- Description: imperative mood, lowercase, no final period, 72 characters max (e.g. `feat(settings): save the settings atomically`).
+- Breaking change: add `!` after the type or scope (e.g. `feat(settings)!: ...`) and explain it in a `BREAKING CHANGE:` footer.
 
 ## Code review
 
-- Before opening any pull request that changes code (`src/`, tests, `Cargo.toml`), run the `code-reviewer` subagent (`.claude/agents/code-reviewer.md`) on the branch.
+- Before opening any pull request that changes code or its build (`src/`, tests, `Cargo.toml`, `build.rs`, `rust-toolchain.toml`, `.github/workflows/`), run the `code-reviewer` subagent (`.claude/agents/code-reviewer.md`) on the branch.
 - It writes its recommendations, in French, to `outputs/<YYYY-MM-DD>-<branch>-code-review.md`. These notes are ignored by Git.
 - Summarize the recommendations to the user and apply only the ones they approve, then open the pull request.
 
@@ -77,6 +77,7 @@ Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.
   - `cargo test --all-features`
 - The same checks run in CI (`.github/workflows/ci.yml`) on every pull request.
 - `unsafe` code is forbidden and Clippy pedantic lints are enabled (see `[lints]` in `Cargo.toml`).
+- `rust-version` in `Cargo.toml` is the minimum Rust version: CI also builds with it. Raise it when a dependency or a language feature needs a newer Rust.
 
 ## Releases
 

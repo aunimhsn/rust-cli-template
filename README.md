@@ -12,8 +12,9 @@ Template for Rust applications (command-line, desktop or web), with the project 
 | `roadmap.md` | Skeleton of the roadmap: technical choices and steps, one pull request per step. |
 | `Cargo.toml` | Package, `unsafe` code forbidden, Clippy pedantic lints, optimized release profile. |
 | `rust-toolchain.toml` | Stable toolchain with `rustfmt` and Clippy. |
-| `.github/workflows/ci.yml` | Format, lint and test on every pull request. |
+| `.github/workflows/ci.yml` | Format, lint and test on every pull request, and build with the minimum Rust version (`rust-version`). |
 | `.github/workflows/release.yml` | Windows, macOS and Linux archives published as a GitHub release on version tags. |
+| `.github/dependabot.yml` | Weekly pull requests to update the crates and the GitHub Actions. |
 | `LICENSE-MIT`, `LICENSE-APACHE` | Dual license, the Rust ecosystem default. |
 
 ## Start a new project
@@ -25,9 +26,11 @@ Template for Rust applications (command-line, desktop or web), with the project 
    ```
 
 2. In `Cargo.toml`, update `name`, `description` and `repository` (add `keywords` and `categories` if the crate is published), then run `cargo build` to update `Cargo.lock`.
-3. Replace this README with the one of the project.
-4. With Claude Code, write `specs.md`, then split it into steps in `roadmap.md`.
-5. Keep `.github/workflows/release.yml` for a command-line or terminal application; adapt or replace it for a desktop application (installers) or a web application (deployment).
+3. Adapt this README to the project: keep the Requirements, Build, Development, Release and License sections, replace the others.
+4. Check the license: keep `MIT OR Apache-2.0`, or change `license` in `Cargo.toml` and the `LICENSE-*` files (they are also copied into the release archives by `.github/workflows/release.yml`).
+5. On GitHub, protect `main` (**Settings › Rules › Rulesets**): require a pull request and the `Format, lint and test` and `Minimum Rust version` checks.
+6. With Claude Code, write `specs.md`, then split it into steps in `roadmap.md`, and confirm or replace its **Releases** choice.
+7. Keep `.github/workflows/release.yml` for a command-line or terminal application; adapt or replace it for a desktop application (installers) or a web application (deployment).
 
 ## Requirements
 
