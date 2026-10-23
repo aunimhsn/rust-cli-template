@@ -25,6 +25,12 @@
 - Each step is delivered in its own pull request, which checks the step's box in `roadmap.md`.
 - Keep `roadmap.md` consistent with `specs.md` when the specifications change.
 
+## Process
+
+- Follow the phases of `process.md`: specifications, wireframes, mock-up, design system, then the build, one pull request per step.
+- For a user interface, start with editable Excalidraw wireframes in `docs/wireframes/` (grayscale, one group per block), and build the HTML mock-up only once the owner has approved the layout.
+- During the specifications, check the documentation, rate limits and terms of use of every external service, and record the risks the owner accepts, with their date, in `roadmap.md`.
+
 ## Git workflow
 
 - Never commit or push directly to `main`.
