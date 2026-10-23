@@ -29,8 +29,14 @@ Template for Rust applications (command-line, desktop or web), with the project 
 3. Adapt this README to the project: keep the Requirements, Build, Development, Release and License sections, replace the others.
 4. Check the license: keep `MIT OR Apache-2.0`, or change `license` in `Cargo.toml` and the `LICENSE-*` files (they are also copied into the release archives by `.github/workflows/release.yml`).
 5. On GitHub, protect `main` (**Settings › Rules › Rulesets**): require a pull request and the `Format, lint and test` and `Minimum Rust version` checks.
-6. With Claude Code, write `specs.md`, then split it into steps in `roadmap.md`, and confirm or replace its **Releases** choice.
-7. Keep `.github/workflows/release.yml` for a command-line or terminal application; adapt or replace it for a desktop application (installers) or a web application (deployment).
+6. Set the pull request settings, which are not copied from the template: allow only squash merging, and delete the branches once merged (**Settings › General › Pull Requests**), or:
+
+   ```sh
+   gh repo edit --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge
+   ```
+
+7. With Claude Code, write `specs.md`, then split it into steps in `roadmap.md`, and confirm or replace its **Releases** choice.
+8. Keep `.github/workflows/release.yml` for a command-line or terminal application; adapt or replace it for a desktop application (installers) or a web application (deployment).
 
 ## Requirements
 
