@@ -47,12 +47,19 @@ Goal: agree on **what** the application does before deciding **how**.
 
 Goal: agree on the **layout**, without colors or code, in a format the owner can edit.
 
-1. Claude Code generates an Excalidraw file in `docs/wireframes/` (a script writes the JSON): grayscale, sample data close to real ones, one frame per screen or window size, **one group per block** so that a block moves in one click.
+1. Claude Code generates an Excalidraw file in `docs/wireframes/` (a script writes the JSON): grayscale, sample data close to real ones, one frame per screen or window size, **one group per block** so that a block moves in one click (double-click a block to edit one of its elements, **Ctrl+Shift+G** to ungroup it).
 2. It checks the result with an SVG preview before handing it over.
 3. The owner edits it in VS Code with the **Excalidraw** extension (`pomdtr.excalidraw-editor`), or on excalidraw.com (**Open**, then **Save to…**).
-4. Claude Code reads the edited file back and writes the agreed layout in `specs.md`.
+4. Iterate: the owner draws their version, Claude Code rearranges it and fills the gaps, the owner draws the next version, and so on. Claude Code commits the owner's version before changing it, so that every iteration stays in the history.
+5. Once the main frames are agreed, Claude Code draws the rest under them: other kinds of content, empty, loading and waiting states, errors, the other language.
+6. Claude Code writes the agreed layout in `specs.md`.
 
-For a responsive interface, draw each breakpoint (e.g. narrow, medium, wide) and the panels that open over the content (settings).
+For a responsive interface, start with the narrowest layout (mobile first): it forces to choose the essential, and the wider layouts then only rearrange the same blocks. Draw the panels that open over the content (settings) too.
+
+Working with the file:
+
+- The VS Code extension does **not** save by itself, unlike excalidraw.com: press **Ctrl+S** before asking Claude Code to read the file.
+- The extension keeps the drawing in memory and doesn't reload the file when it changes on disk. Before Claude Code rewrites the file, save and close its tab; afterwards, reopen it, and never save the old tab over the new file.
 
 ## 4. Mock-up
 
@@ -118,3 +125,5 @@ After the release, or after any phase that went badly:
 | rust-exile-market | A Flatpak browser only receives the opened file: serve the repository with `python3 -m http.server`. |
 | rust-exile-market | In the VS Code Flatpak, `~/.cargo/bin` is not on the `PATH` of the terminal: prepend it. |
 | rust-exile-market | On a free GitHub account, rulesets only protect public repositories. |
+| rust-exile-market | The owner draws, Claude Code rearranges and completes: the wireframe iterations made the interface personal. |
+| rust-exile-market | The VS Code Excalidraw extension neither autosaves nor reloads a file changed on disk: save, close, reopen. |
