@@ -63,18 +63,20 @@ Working with the file:
 
 ## 4. Mock-up
 
-Goal: check the layout with real content, every scenario and every state, before writing the application.
+Goal: choose the style with real content, every scenario and every state, before writing the application.
 
-1. One self-contained HTML file in `docs/mockups/`, built from the approved wireframe, with controls above the mock window: size presets and sliders, scenarios (empty, normal, edge cases, errors), language, loading and error states.
-2. URL parameters (e.g. `?w=1280&scenario=stack&lang=fr`) to share a given view.
-3. Serve the repository root so that the page reaches the files of the repository (icons in `assets/`), even in a sandboxed browser (Flatpak, Snap) that only receives the HTML file:
+1. One self-contained HTML page in `docs/mockups/`, built from the approved wireframe: every frame of the wireframe becomes a window, with sample data close to real ones.
+2. **Several styles on the same page, 3 or 4**, each with its own fonts, colors and density, switched with **tabs at the top of the page**. The address keeps the chosen style (e.g. `?theme=slate`) to share it. Each style only sets tokens (CSS variables); the components use them all, so that a style is cheap to add or tweak.
+3. The owner picks a style, or mixes two; iterate on it alone, one change at a time (e.g. the main color, then the logo, then the font).
+4. Use fonts that can be embedded in the application (e.g. SIL Open Font License). Preload the font files, so that the page, and its screenshots, only finish loading once the fonts are there.
+5. Serve the repository root so that the page reaches the files of the repository (icons and logo in `assets/`), even in a sandboxed browser (Flatpak, Snap) that only receives the HTML file:
 
    ```sh
    python3 -m http.server 8765 --bind 127.0.0.1
    ```
 
    then open `http://127.0.0.1:8765/docs/mockups/<file>.html`, and reload after each change.
-4. Claude Code checks its own changes with headless screenshots (`firefox --headless --screenshot`) before asking for a review.
+6. Claude Code checks its own changes with headless screenshots (`firefox --headless --screenshot`) before asking for a review, and exports one large PNG per style to `outputs/` to compare them at a glance.
 
 ## 5. Design system
 
@@ -127,3 +129,5 @@ After the release, or after any phase that went badly:
 | rust-exile-market | On a free GitHub account, rulesets only protect public repositories. |
 | rust-exile-market | The owner draws, Claude Code rearranges and completes: the wireframe iterations made the interface personal. |
 | rust-exile-market | The VS Code Excalidraw extension neither autosaves nor reloads a file changed on disk: save, close, reopen. |
+| rust-exile-market | Mock-ups got much better once the layout was settled: one question per phase (layout, then style). |
+| rust-exile-market | Three styles on one page with tabs made the choice easy; the main color stays white so that colors keep their meaning (item rarities). |
