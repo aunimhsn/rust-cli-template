@@ -16,6 +16,7 @@ Template for Rust applications (command-line, desktop or web), with the project 
 | `.github/workflows/release.yml` | Windows, macOS and Linux archives published as a GitHub release on version tags. |
 | `.github/dependabot.yml` | Weekly pull requests to update the crates and the GitHub Actions. |
 | `LICENSE-MIT`, `LICENSE-APACHE` | Dual license, the Rust ecosystem default. |
+| `inputs/`, `outputs/` | Untracked working folders: temporary references given to Claude Code, and temporary files it produces (see `CLAUDE.md`). |
 
 ## Start a new project
 
