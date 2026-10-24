@@ -38,6 +38,7 @@ Two folders are the exchange area between the owner and Claude Code. They are ig
 - Follow the phases of `process.md`: specifications, wireframes, mock-up, design system, then the build, one pull request per step.
 - For a user interface, start with editable Excalidraw wireframes in `docs/wireframes/` (grayscale, one group per block), and build the HTML mock-up only once the owner has approved the layout.
 - During the specifications, check the documentation, rate limits and terms of use of every external service, and record the risks the owner accepts, with their date, in `roadmap.md`.
+- For the mock-up, compare 3 or 4 styles that explore new directions for this application. `design-journal.md` records the past design experiences: use it as a source of ideas for one style at most, never as default rules. Give each open decision its own tab group on the mock-up page, and remove it once decided.
 
 ## Git workflow
 
