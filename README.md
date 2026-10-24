@@ -7,6 +7,7 @@ Template for Rust applications (command-line, desktop or web), with the project 
 | File | Content |
 |---|---|
 | `process.md` | The phases from an idea to a release: repository, specifications, wireframes, mock-up, design system, build, release, retrospective. |
+| `design-journal.md` | The design experiences of past applications: choices kept and rejected, and why. A source of ideas, not rules. |
 | `CLAUDE.md` | Rules for Claude Code: communication, naming, language, specifications and roadmap, Git workflow, commit messages, code review, checks, releases. |
 | `.claude/agents/code-reviewer.md` | Subagent that reviews a branch before its pull request and writes its notes, in French, to `outputs/`. |
 | `specs.md` | Skeleton of the specifications: what the application does. |

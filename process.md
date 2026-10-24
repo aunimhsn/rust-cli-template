@@ -67,7 +67,11 @@ Goal: choose the style with real content, every scenario and every state, before
 
 1. One self-contained HTML page in `docs/mockups/`, built from the approved wireframe: every frame of the wireframe becomes a window, with sample data close to real ones.
 2. **Several styles on the same page, 3 or 4**, each with its own fonts, colors and density, switched with **tabs at the top of the page**. The address keeps the chosen style (e.g. `?theme=slate`) to share it. Each style only sets tokens (CSS variables); the components use them all, so that a style is cheap to add or tweak.
+   - The styles explore **new directions** for this application, its users and its subject. [design-journal.md](design-journal.md) records the past experiences: it may inspire one of the styles, never all of them, and nothing in it is a default.
 3. The owner picks a style, or mixes two; iterate on it alone, one change at a time (e.g. the main color, then the logo, then the font).
+   - **Each open decision gets its own group of tabs** on the page (e.g. two button styles, three header variants, five offsets), so that the owner compares on screen; once decided, the tab is removed and the choice is kept.
+   - **Pixel alignments are tuned by eye on the owner's real screen**, with a tab of offsets: the display scale differs from the headless screenshots, which only give the direction.
+   - From then on, **the mock-up is the reference** of the interface; the wireframe only fixed the first layout.
 4. Use fonts that can be embedded in the application (e.g. SIL Open Font License). Preload the font files, so that the page, and its screenshots, only finish loading once the fonts are there.
 5. Serve the repository root so that the page reaches the files of the repository (icons and logo in `assets/`), even in a sandboxed browser (Flatpak, Snap) that only receives the HTML file:
 
@@ -90,7 +94,7 @@ Write them in the design section of `specs.md` (or in `docs/design-system.md` wh
 - **Icons and images**: where they come from, their license, what is bundled in `assets/` (with an `assets/NOTICE.md` for images that aren't under the project license) and what is loaded at runtime.
 - **Tone of the messages**: formal or informal address, length, how errors are worded.
 
-The mock-up is then updated to use exactly these tokens.
+The mock-up is then updated to use exactly these tokens. At the end of the phase, add an entry to [design-journal.md](design-journal.md) in the template: the choices kept, the ones rejected, and why.
 
 ## 6. Build
 
@@ -131,3 +135,5 @@ After the release, or after any phase that went badly:
 | rust-exile-market | The VS Code Excalidraw extension neither autosaves nor reloads a file changed on disk: save, close, reopen. |
 | rust-exile-market | Mock-ups got much better once the layout was settled: one question per phase (layout, then style). |
 | rust-exile-market | Three styles on one page with tabs made the choice easy; the main color stays white so that colors keep their meaning (item rarities). |
+| rust-exile-market | One tab group per open decision, removed once decided, turned about a hundred small decisions into quick on-screen comparisons. |
+| rust-exile-market | Pixel offsets measured on headless screenshots were wrong on the owner's scaled screen: tune them by eye with a tab of values. |
