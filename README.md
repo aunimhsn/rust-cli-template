@@ -15,7 +15,7 @@ Template for Rust applications (command-line, desktop or web), with the project 
 | `specs.md` | Skeleton of the specifications: what the application does. |
 | `roadmap.md` | Skeleton of the roadmap: the steps, one pull request per step, and the links to the notes of `docs/`. Kept short: it is read at every session. |
 | `docs/technical-choices.md` | The technical choices and their reasons. |
-| `.claude/settings.json` | Project settings of Claude Code: the claude.ai connectors turned off, to save tokens. |
+| `.claude/settings.json` | Project settings of Claude Code: the claude.ai connectors turned off and the unused skills hidden from the model, to save tokens. |
 | `Cargo.toml` | Package, `unsafe` code forbidden, Clippy pedantic lints, optimized release profile. |
 | `rust-toolchain.toml` | Stable toolchain with `rustfmt` and Clippy. |
 | `.github/workflows/ci.yml` | Format, lint and test on every pull request, and build with the minimum Rust version (`rust-version`). |
