@@ -13,7 +13,9 @@ Template for Rust applications (command-line, desktop or web), with the project 
 | `.claude/skills/excalidraw-wireframes/` | Skill: editable Excalidraw wireframes of the interface, iterated with the owner (Python helpers and an SVG preview). |
 | `.claude/skills/html-mockups/` | Skill: the HTML mock-up built from the wireframe, styles and open decisions compared with tabs, then the design tokens (starting page and headless screenshots). |
 | `specs.md` | Skeleton of the specifications: what the application does. |
-| `roadmap.md` | Skeleton of the roadmap: technical choices and steps, one pull request per step. |
+| `roadmap.md` | Skeleton of the roadmap: the steps, one pull request per step, and the links to the notes of `docs/`. Kept short: it is read at every session. |
+| `docs/technical-choices.md` | The technical choices and their reasons. |
+| `.claude/settings.json` | Project settings of Claude Code: the claude.ai connectors turned off and the unused skills hidden from the model, to save tokens. |
 | `Cargo.toml` | Package, `unsafe` code forbidden, Clippy pedantic lints, optimized release profile. |
 | `rust-toolchain.toml` | Stable toolchain with `rustfmt` and Clippy. |
 | `.github/workflows/ci.yml` | Format, lint and test on every pull request, and build with the minimum Rust version (`rust-version`). |
@@ -40,7 +42,7 @@ Template for Rust applications (command-line, desktop or web), with the project 
    gh repo edit --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge
    ```
 
-7. With Claude Code, follow [process.md](process.md): write `specs.md`, then split it into steps in `roadmap.md`, and confirm or replace its **Releases** choice.
+7. With Claude Code, follow [process.md](process.md): write `specs.md`, then split it into steps in `roadmap.md`, and confirm or replace the **Releases** choice of `docs/technical-choices.md`.
 8. Keep `.github/workflows/release.yml` for a command-line or terminal application; adapt or replace it for a desktop application (installers) or a web application (deployment).
 
 ## Requirements
