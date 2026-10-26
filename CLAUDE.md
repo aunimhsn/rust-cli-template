@@ -15,16 +15,22 @@
 
 - Everything in the project (code, identifiers, comments, documentation, commit messages) must be written in English.
 - Exception: the translations of the user interface, if the project has any. Only the translated strings and their comments are in the other language; the code stays in English.
-- If the user interface is translated, its texts are never hard-coded: each message goes into the translation file of every language (English is the reference), read with the library chosen in `roadmap.md`.
+- If the user interface is translated, its texts are never hard-coded: each message goes into the translation file of every language (English is the reference), read with the library chosen in `docs/technical-choices.md`.
 - Exception: the code review notes in `outputs/` are written in French.
 
 ## Specifications and roadmap
 
-- Before writing code, describe the expected behavior of the application in `specs.md`, then split the work into steps in `roadmap.md`, with the technical choices and their reasons.
+- Before writing code, describe the expected behavior of the application in `specs.md`, then split the work into steps in `roadmap.md`, and write the technical choices and their reasons in `docs/technical-choices.md`.
 - At the start of each session, read `roadmap.md` to know the progress; when asked to continue, resume at the first unchecked step.
 - Each step is delivered in its own pull request, which checks the step's box in `roadmap.md`.
 - Keep `roadmap.md` consistent with `specs.md` when the specifications change.
+- Keep `roadmap.md` short, since it is read at every session: the steps to come in detail, one line per step done with its pull requests. When the pull request of a step (or of a sub-step) is merged, move the detail of the step to `docs/roadmap-archive.md`. Reference notes (technical choices, rules of the external services) live in `docs/`, linked from `roadmap.md`, and are read only by the steps that need them.
+- Read `specs.md` by section: list its headings first (`grep -n '^#' specs.md`), then read only the sections the step needs.
 - When the pull request of a step (or of a sub-step) is merged, tell the owner that the step is done and remind them to close the session and start a new one for the next step: a fresh session costs far fewer tokens, and `roadmap.md` and the memory hold what is needed to resume.
+
+## Connectors
+
+- The claude.ai connectors (Claude Docs and the others) are turned off for the project in `.claude/settings.json` (`disableClaudeAiConnectors`): their instructions and tools would be sent with every message. Remove the setting only if the project needs one of them.
 
 ## Working folders
 
@@ -38,7 +44,7 @@ Two folders are the exchange area between the owner and Claude Code. They are ig
 
 - Follow the phases of `process.md`: specifications, wireframes, mock-up, design system, then the build, one pull request per step.
 - For a user interface, start with editable Excalidraw wireframes in `docs/wireframes/` (grayscale, one group per block; `excalidraw-wireframes` skill), and build the HTML mock-up only once the owner has approved the layout (`html-mockups` skill).
-- During the specifications, check the documentation, rate limits and terms of use of every external service, and record the risks the owner accepts, with their date, in `roadmap.md`.
+- During the specifications, check the documentation, rate limits and terms of use of every external service, and record its limits and the risks the owner accepts, with their date, in a note of `docs/` linked from `roadmap.md` (e.g. `docs/<service>-usage.md`).
 - For the mock-up, compare 3 or 4 styles that explore new directions for this application. `design-journal.md` records the past design experiences: use it as a source of ideas for one style at most, never as default rules. Give each open decision its own tab group on the mock-up page, and remove it once decided.
 
 ## Git workflow
@@ -98,4 +104,4 @@ Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.
 ## Releases
 
 - Pushing a version tag (e.g. `v0.1.0`) that matches the version of `Cargo.toml` publishes a GitHub release with the executables for Windows, macOS and Linux (`.github/workflows/release.yml`).
-- This workflow suits a command-line or terminal application. For a desktop application (installers) or a web application (deployment), adapt or replace it, and record the choice in `roadmap.md`.
+- This workflow suits a command-line or terminal application. For a desktop application (installers) or a web application (deployment), adapt or replace it, and record the choice in `docs/technical-choices.md`.

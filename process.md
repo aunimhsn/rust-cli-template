@@ -28,6 +28,7 @@ This file is a living document: after each application, update it with what work
 3. Protect `main` with a ruleset. On a free GitHub account, rulesets only apply to **public** repositories: make the repository public, or keep it private and accept that `main` is not protected.
 4. First pull request: rename the package (`Cargo.toml`, `Cargo.lock`), adapt the README, check the license.
 5. Open Claude Code in the project folder. Its memory is stored per project: a new session doesn't remember a conversation held in another project. To carry context over, paste a summary of it.
+6. Check the connectors: the template turns off the claude.ai connectors (`disableClaudeAiConnectors` in `.claude/settings.json`), whose instructions and tools would be sent with every message. If the project needs one (Claude Docs, Gmail…), remove the setting; `/mcp` lists the servers that are on, and `/context` what fills the context.
 
 ## 2. Specifications
 
@@ -38,9 +39,9 @@ Goal: agree on **what** the application does before deciding **how**.
    - What is in version 1, and what comes later? What must be easy to add later?
    - Command-line, desktop or web application? One window or several?
    - Where does the data come from?
-2. **Check the data sources early**: documentation, rate limits, terms of use, licenses of the images. Read the source code of a service when its limits aren't documented. Record every risk the owner accepts, with its date, in `roadmap.md`.
+2. **Check the data sources early**: documentation, rate limits, terms of use, licenses of the images. Read the source code of a service when its limits aren't documented. Record the limits and every risk the owner accepts, with its date, in a note of `docs/` (e.g. `docs/<service>-usage.md`) linked from `roadmap.md`.
 3. Write `specs.md`: behavior only (what the user sees, what each action does, edge cases, local files, error handling).
-4. Write `roadmap.md`: technical choices with their reasons (and the alternatives rejected), then the steps, each small enough for one pull request.
+4. Write the technical choices with their reasons (and the alternatives rejected) in `docs/technical-choices.md`, then the steps in `roadmap.md`, each small enough for one pull request. `roadmap.md` is read at every session: keep it short, with links to the notes of `docs/`.
 5. Open the pull request; the owner reads the files on GitHub (**Files changed**) or switches to the branch.
 
 ## 3. Wireframes
