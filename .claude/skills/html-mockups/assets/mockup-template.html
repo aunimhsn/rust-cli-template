@@ -12,7 +12,9 @@
     use nothing else, so that a style is cheap to add or tweak.
   - VARIANTS holds one group of tabs per open decision; the address keeps the choices
     (e.g. ?theme=slate&button=pill), to share them. Remove a group once decided.
-  - SECTIONS lists every scenario and state, each drawn as a window.
+  - SECTIONS lists every scenario and state, each drawn as a window; a new section goes at the
+    top, so that the owner finds it at once. Past ten sections, a table of contents under the
+    header links to each.
 
   Serve the repository root, so that the page reaches assets/ even in a sandboxed browser:
     python3 -m http.server 8765 --bind 127.0.0.1
@@ -34,7 +36,10 @@
   .page-header { padding: 18px 16px 0; }
   .page-header h1 { margin: 0 0 4px; font-size: 20px; }
   .page-header p { margin: 0; max-width: 760px; color: #adb5bd; }
-  .page-section { padding: 8px 16px 24px; }
+  .page-section { padding: 8px 16px 24px; scroll-margin-top: 60px; }   /* stops under the tabs */
+  .page-contents { margin-top: 12px; display: grid; grid-template-columns: repeat(4, max-content); gap: 4px 28px; font-size: 13px; }
+  .page-contents a { color: #adb5bd; text-decoration: none; }
+  .page-contents a:hover { color: #fff; text-decoration: underline; }
   .page-section h2 { font-size: 15px; color: #adb5bd; font-weight: 600; }
   .page-row { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
   .page-slot > span { display: block; margin-bottom: 6px; color: #adb5bd; font-size: 12px; }
@@ -103,7 +108,7 @@
 
   const ROWS = [["Divine Orb", "182 ex"], ["Chaos Orb", "73 ex"], ["Exalted Orb", "1 ex"]];
 
-  // Every scenario and state: [section title, [[label, html], …]].
+  // Every scenario and state: [section title, [[label, html], …]], the newest section first.
   const SECTIONS = [
     ["Main screen", [
       ["With data", appWindow(appHeader(), appRows(ROWS), `<div class="app-content"><span class="app-button">Search</span></div>`, appFooter())],
@@ -120,9 +125,14 @@
       `<div class="group"><span>${variant.label}</span>${Object.entries(variant.options).map(([value, label]) =>
         `<button type="button" data-variant="${key}" data-value="${value}" aria-pressed="${chosen[key] === value}">${label}</button>`).join("")}</div>`).join("");
     const theme = THEMES[chosen.theme];
+    // Past ten sections, a table of contents under the header: the title of each section up to its colon.
+    const contents = SECTIONS.length > 10
+      ? `<nav class="page-contents" aria-label="Sections">${SECTIONS.map(([title], index) =>
+        `<a href="#section-${index + 1}">${title.split(":")[0]}</a>`).join("")}</nav>`
+      : "";
     document.getElementById("sheet").innerHTML = `
-      <header class="page-header"><h1>Style ${theme.title}</h1><p>${theme.text} Sample data.</p></header>
-      ${SECTIONS.map(([title, slots]) => `<section class="page-section"><h2>${title}</h2><div class="page-row">${
+      <header class="page-header"><h1>Style ${theme.title}</h1><p>${theme.text} Sample data.</p>${contents}</header>
+      ${SECTIONS.map(([title, slots], index) => `<section class="page-section" id="section-${index + 1}"><h2>${title}</h2><div class="page-row">${
         slots.map(([label, html]) => `<div class="page-slot"><span>${label}</span>${html}</div>`).join("")}</div></section>`).join("")}`;
   }
 
