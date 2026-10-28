@@ -47,13 +47,14 @@ Two folders are the exchange area between the owner and Claude Code. They are ig
 - Follow the phases of `process.md`: specifications, wireframes, mock-up, design system, then the build, one pull request per step.
 - For a user interface, start with editable Excalidraw wireframes in `docs/wireframes/` (grayscale, one group per block; `excalidraw-wireframes` skill), and build the HTML mock-up only once the owner has approved the layout (`html-mockups` skill).
 - During the specifications, check the documentation, rate limits and terms of use of every external service, and record its limits and the risks the owner accepts, with their date, in a note of `docs/` linked from `roadmap.md` (e.g. `docs/<service>-usage.md`).
-- For the mock-up, compare 3 or 4 styles that explore new directions for this application. `design-journal.md` records the past design experiences: use it as a source of ideas for one style at most, never as default rules. Give each open decision its own tab group on the mock-up page, and remove it once decided.
+- For the mock-up, compare 3 or 4 styles that explore new directions for this application. `design-journal.md` records the past design experiences: use it as a source of ideas for one style at most, never as default rules. Give each open decision its own tab group on the mock-up page, and remove it once decided. A new section of the mock-up goes at the top of the page, so that the owner finds it at once; past ten sections, a table of contents under the header links to each.
 
 ## Git workflow
 
 - Never commit or push directly to `main`.
 - For each task, create a dedicated branch from `main`, commit and push only on that branch.
 - Every change must go through a pull request targeting `main`.
+- Each time a pull request is opened or updated, give the owner its full link (`https://github.com/<owner>/<repository>/pull/<number>`), not only its number.
 - Merge pull requests with **Squash and merge** only, so that each pull request becomes one commit on `main`, titled in Conventional Commits. The repository allows only squash merging and deletes the branch once merged; check these settings on every new repository (`gh repo edit --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge`).
 - Name branches `<type>/<short-description>` in kebab-case, using the commit types below (e.g. `feat/dark-mode`, `fix/settings-save`).
 - Never switch branches in the main project directory while the owner may be testing a branch there (for example with `cargo run`): it would change the code they run. Work on any other branch in a separate Git worktree outside the project (`git worktree add <directory> -b <branch> origin/main`), and remove it with `git worktree remove <directory>` once the work is pushed.
