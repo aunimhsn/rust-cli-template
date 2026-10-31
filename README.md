@@ -1,19 +1,19 @@
-# rust-project-template
+# rust-cli-template
 
-Template for Rust applications (command-line, desktop or web), with the project conventions and the Claude Code setup.
+Template for Rust command-line applications, with the project conventions, the process from an idea to a release, and the Claude Code setup. Formerly `rust-project-template`; its web counterpart is [astro-static-website-template](https://github.com/aunimhsn/astro-static-website-template).
 
 ## What it contains
 
 | File | Content |
 |---|---|
-| `process.md` | The phases from an idea to a release: repository, specifications, wireframes, mock-up, design system, build, release, retrospective. |
+| `process.md` | The phases from an idea to a release: repository, specifications, wireframes, mock-up and design system (for a terminal interface), build, release, retrospective, then an optional polish and the next cycle. |
 | `design-journal.md` | The design experiences of past applications: choices kept and rejected, and why. A source of ideas, not rules. |
 | `CLAUDE.md` | Rules for Claude Code: communication, naming, language, specifications and roadmap, Git workflow, commit messages, code review, checks, releases. |
 | `.claude/agents/code-reviewer.md` | Subagent that reviews a branch before its pull request and writes its notes, in French, to `outputs/`. |
-| `.claude/skills/excalidraw-wireframes/` | Skill: editable Excalidraw wireframes of the interface, iterated with the owner (Python helpers and an SVG preview). |
-| `.claude/skills/html-mockups/` | Skill: the HTML mock-up built from the wireframe, styles and open decisions compared with tabs, then the design tokens (starting page and headless screenshots). |
+| `.claude/skills/excalidraw-wireframes/` | Skill: editable Excalidraw wireframes of a terminal interface, and sketches of a structure (the commands and their options), iterated with the owner (Python helpers and an SVG preview). |
+| `.claude/skills/html-mockups/` | Skill: the HTML mock-up built from the wireframe, styles and open decisions compared with tabs, then the design tokens (starting page, server without cache, headless screenshots). |
 | `specs.md` | Skeleton of the specifications: what the application does. |
-| `roadmap.md` | Skeleton of the roadmap: the steps, one pull request per step, and the links to the notes of `docs/`. Kept short: it is read at every session. |
+| `roadmap.md` | Skeleton of the roadmap: the steps, one pull request per step, the links to the notes of `docs/`, and a « Later » list for the polish and the next cycle. Kept short: it is read at every session. |
 | `docs/technical-choices.md` | The technical choices and their reasons. |
 | `.claude/settings.json` | Project settings of Claude Code: the claude.ai connectors turned off and the unused skills hidden from the model, to save tokens. |
 | `Cargo.toml` | Package, `unsafe` code forbidden, Clippy pedantic lints, optimized release profile. |
@@ -29,7 +29,7 @@ Template for Rust applications (command-line, desktop or web), with the project 
 1. Create the repository from this template, with the **Use this template** button or:
 
    ```sh
-   gh repo create <name> --template aunimhsn/rust-project-template --private --clone
+   gh repo create <name> --template aunimhsn/rust-cli-template --private --clone
    ```
 
 2. In `Cargo.toml`, update `name`, `description` and `repository` (add `keywords` and `categories` if the crate is published), then run `cargo build` to update `Cargo.lock`.
@@ -42,8 +42,7 @@ Template for Rust applications (command-line, desktop or web), with the project 
    gh repo edit --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge
    ```
 
-7. With Claude Code, follow [process.md](process.md): write `specs.md`, then split it into steps in `roadmap.md`, and confirm or replace the **Releases** choice of `docs/technical-choices.md`.
-8. Keep `.github/workflows/release.yml` for a command-line or terminal application; adapt or replace it for a desktop application (installers) or a web application (deployment).
+7. With Claude Code, follow [process.md](process.md): write `specs.md`, then split it into steps in `roadmap.md`, and confirm the choices of `docs/technical-choices.md`.
 
 ## Requirements
 

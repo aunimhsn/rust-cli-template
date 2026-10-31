@@ -16,9 +16,10 @@
     top, so that the owner finds it at once. Past ten sections, a table of contents under the
     header links to each.
 
-  Serve the repository root, so that the page reaches assets/ even in a sandboxed browser:
-    python3 -m http.server 8765 --bind 127.0.0.1
-  then open http://127.0.0.1:8765/docs/mockups/<this file>.html
+  Serve the repository root without cache, on the port of the project (docs/technical-choices.md),
+  so that the page reaches assets/ even in a sandboxed browser:
+    python3 docs/mockups/serve.py <port>
+  then open http://127.0.0.1:<port>/docs/mockups/<this file>.html
 -->
 <!-- Fonts that the application can embed (e.g. SIL Open Font License). Preload the font files
      and use font-display: block, so that the page, and its screenshots, only finish loading
