@@ -2,18 +2,20 @@
 
 Template for Rust command-line applications, with the project conventions, the process from an idea to a release, and the Claude Code setup. Formerly `rust-project-template`; its web counterpart is [astro-static-website-template](https://github.com/aunimhsn/astro-static-website-template).
 
+![The process: the backlog feeds the roadmap; each change goes through the tools it needs to a pull request; a cycle ends with the release and the retrospective.](docs/process.svg)
+
 ## What it contains
 
 | File | Content |
 |---|---|
-| `process.md` | The phases from an idea to a release: repository, specifications, wireframes, mock-up and design system (for a terminal interface), build, release, retrospective, then an optional polish and the next cycle. |
+| `process.md`, `docs/process.svg` | How an application goes from an idea to a release and keeps growing: a toolbox (specifications, structure, wireframes, mock-up and design system for a terminal interface, build, release, retrospective) picked for each change, a backlog and a roadmap, the urgent fixes and the explorations, with its diagram. |
 | `design-journal.md` | The design experiences of past applications: choices kept and rejected, and why. A source of ideas, not rules. |
 | `CLAUDE.md` | Rules for Claude Code: communication, naming, language, specifications and roadmap, Git workflow, commit messages, code review, checks, releases. |
 | `.claude/agents/code-reviewer.md` | Subagent that reviews a branch before its pull request and writes its notes, in French, to `outputs/`. |
 | `.claude/skills/excalidraw-wireframes/` | Skill: editable Excalidraw wireframes of a terminal interface, and sketches of a structure (the commands and their options), iterated with the owner (Python helpers and an SVG preview). |
 | `.claude/skills/html-mockups/` | Skill: the HTML mock-up built from the wireframe, styles and open decisions compared with tabs, then the design tokens (starting page, server without cache, headless screenshots). |
 | `specs.md` | Skeleton of the specifications: what the application does. |
-| `roadmap.md` | Skeleton of the roadmap: the steps, one pull request per step, the links to the notes of `docs/`, and a « Later » list for the polish and the next cycle. Kept short: it is read at every session. |
+| `roadmap.md`, `backlog.md` | Skeletons of the roadmap (the size of the project and the steps chosen, one pull request per step, kept short since it is read at every session) and of the backlog (polish, edge cases, features, large works, waiting on others). |
 | `docs/technical-choices.md` | The technical choices and their reasons. |
 | `.claude/settings.json` | Project settings of Claude Code: the claude.ai connectors turned off and the unused skills hidden from the model, to save tokens. |
 | `Cargo.toml` | Package, `unsafe` code forbidden, Clippy pedantic lints, optimized release profile. |
@@ -42,7 +44,7 @@ Template for Rust command-line applications, with the project conventions, the p
    gh repo edit --enable-squash-merge --enable-merge-commit=false --enable-rebase-merge=false --delete-branch-on-merge
    ```
 
-7. With Claude Code, follow [process.md](process.md): write `specs.md`, then split it into steps in `roadmap.md`, and confirm the choices of `docs/technical-choices.md`.
+7. With Claude Code, follow [process.md](process.md): size the project, write `specs.md`, then split it into steps in `roadmap.md`, and confirm the choices of `docs/technical-choices.md`.
 
 ## Requirements
 

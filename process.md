@@ -1,42 +1,99 @@
 # Process
 
-How a command-line application goes from an idea to a release, with Claude Code. Each phase ends with something to validate before the next one starts: changing a sentence in the specifications costs less than changing a wireframe, which costs less than changing code.
+How a command-line application goes from an idea to a release, then keeps growing, with Claude Code. Its web counterpart is [astro-static-website-template](https://github.com/aunimhsn/astro-static-website-template/blob/main/process.md): a lesson that applies to every project goes to both.
 
-This file is a living document: after each application, update it with what worked and what didn't (see [Retrospective](#8-retrospective)). Its web counterpart is [astro-static-website-template](https://github.com/aunimhsn/astro-static-website-template/blob/main/process.md): a lesson that applies to every project goes to both.
+The process is not a straight line. Its phases are **tools**, picked for each change according to what it needs: a new option goes straight to the build, a new screen of a terminal interface goes through its wireframe and mock-up first. What is not being done lives in a **backlog**; what is chosen goes to the **roadmap**, one pull request per step. Each tool ends with something the owner validates, from the cheapest to the most expensive: changing a sentence in the specifications costs less than changing a wireframe, which costs less than changing code.
 
-```
-1. Repository ─▶ 2. Specs ─▶ 3. Wireframes ─▶ 4. Mock-up ─▶ 5. Design system ─▶ 6. Build ─▶ 7. Release ─▶ 8. Retrospective ─▶ 9. Polish ─▶ 10. Next cycle
-   template        specs.md     Excalidraw       HTML           tokens             one PR       tag             process.md           (optional)    back to 2
-                   roadmap.md   (terminal interface only, 3 to 5)                  per step                                        small PRs     for its scope
-                       ▲                                                                                                                             │
-                       └─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-```
+This file is a living document: after each cycle, update it with what worked and what didn't (see [Retrospective](#retrospective)).
 
-| Phase | Output | Done when |
-|---|---|---|
-| [1. Repository](#1-repository) | Repository from the template, first pull request | `main` is protected and the package has its name. |
-| [2. Specifications](#2-specifications) | `specs.md`, `roadmap.md` | The owner has answered the open questions and merged them. |
-| [3. Wireframes](#3-wireframes) (terminal interface) | `docs/wireframes/*.excalidraw` | The owner has edited and approved the layout. |
-| [4. Mock-up](#4-mock-up) (terminal interface) | `docs/mockups/*.html` | Every scenario and state looks right at every size. |
-| [5. Design system](#5-design-system) (terminal interface) | Design section of `specs.md` | Colors, sizes and typography are written as tokens. |
-| [6. Build](#6-build) | One pull request per roadmap step | Every box of `roadmap.md` is checked. |
-| [7. Release](#7-release) | Version tag, GitHub release | The archives are published and the README explains how to use them. |
-| [8. Retrospective](#8-retrospective) | Changes to this file and to the template | The lessons are written down. |
-| [9. Polish](#9-polish) (optional) | Small pull requests from the « Later » list | The touches the owner picked are released. |
-| [10. Next cycle](#10-next-cycle) | `specs.md` updated, new steps in `roadmap.md` | The owner has approved the scope of the cycle; the phases start again for it. |
+![The process: the backlog feeds the roadmap; each change goes through the tools it needs to a pull request; a cycle ends with the release and the retrospective, whose leftovers go back to the backlog.](docs/process.svg)
 
-## 1. Repository
+## How it works
+
+1. **Start a project** from the template, and size it with the owner: which tools this project uses, and how far (see [Size the project](#size-the-project)).
+2. **The first cycle** takes the application to its first release, through the tools it needs in order: specifications, structure, then wireframes, mock-up and design system for a terminal interface, build, release, retrospective.
+3. **Then the loop**: with the owner, pick from the [backlog](#the-backlog) what comes next, write it in `roadmap.md` as steps, size each change and split it into sub-steps when it helps ([Size a change](#size-a-change)), and run only the tools it needs. A group of steps with a goal (« JSON output and Windows support ») is a **cycle**: it ends with its release (a minor or major version) and its retrospective.
+4. **Outside the roadmap**, two kinds of work: an [urgent fix](#urgent-fixes) that can't wait, and an [exploration](#explorations) that tries an idea before deciding.
+
+## Size the project
+
+At the setup, Claude Code asks how large the project is and proposes the tools and their depth; the owner decides, and the choice is written at the top of `roadmap.md`.
+
+| Project | Tools |
+|---|---|
+| A small command (one action, a few options) | Short specifications with the usage, the help and an example of each output; build; release. |
+| A tool of several commands | Specifications, the structure of the commands and their options in Excalidraw, build, release. |
+| A terminal interface (screens, keys, colors) | Every tool, in order, for the first cycle. |
+
+## Size a change
+
+At the start of each step, Claude Code says which tools the change needs, and why; the owner may add or remove one.
+
+| Change | Tools |
+|---|---|
+| A message, a fix, a dependency | Build. |
+| A new option of a command | Specifications (its usage and output), then build. |
+| A new command | Specifications, structure (where it fits among the others), build. |
+| A new output to design (a table, colors, a progress bar) | Mock-up, then build; the decision in `specs.md`. |
+| A new screen of a terminal interface | Specifications, wireframe, mock-up, build. |
+| A new tool, a redesign | Every tool, in order. |
+
+Only when it helps, a step is split into sub-steps, one pull request each, each one coherent and tested on its own: a step that needs several tools, or more than one review (for example 4a (specifications and structure of a new command), 4b (its mock-up) and 4c (its build)). A small step stays whole, since each pull request also costs a review, the checks and an archive.
+When a step turns out larger than sized, stop and size it again with the owner rather than stretching the pull request.
+
+## The backlog
+
+`backlog.md` holds everything noted and not being done: an evolving list, read when the next work is chosen, not at every session (`roadmap.md` stays short).
+
+- **What goes in**: the touches set aside during a step (polish), the edge cases that need thought, the features for later, the large works, and what waits on someone else.
+- **One entry per item**: what it is in one sentence, its kind (polish, edge case, feature, large work, waiting), what it depends on, and the date it was noted. Claude Code adds an entry as soon as an idea comes up outside the current step, rather than keeping it only in its memory.
+- **From the backlog to the roadmap**: when the roadmap has no step left, or at the end of a cycle, Claude Code proposes the next items with their cost and dependencies; the owner picks; the chosen items leave the backlog and become steps of `roadmap.md`.
+- **Polish**: after a release, a series of small touches from the backlog, released together as a patch version, is often worth doing before anything new.
+- At each retrospective, the backlog is sorted: what is done or no longer wanted leaves it.
+
+## Urgent fixes
+
+A fix that can't wait (a crash, a security alert, data written to the wrong place) jumps the roadmap:
+
+1. Branch `fix/<short-description>` from `main`, even while a step is in progress (in a worktree if the owner is testing the step in the main folder).
+2. The fix, the test that would have caught it, the code review, a pull request opened at once, and a patch release.
+3. Once merged, one line in `roadmap.md`, under the step in progress, and the step goes on (rebased on `main`).
+
+## Explorations
+
+An idea that needs trying before deciding (a library, a terminal interface, a faster algorithm) is an exploration, not a step. It happens at any time: during a step, when a choice needs trying before it is made (on sylent.art, whether a 3D scene runs on a phone, during the mock-up); or between steps, from an idea of the backlog (the launch videos).
+
+1. A branch `explore/<short-description>`, or a program in the scratchpad: nothing of it is merged as it is.
+2. Bounded: the owner and Claude Code agree on what it must answer (« does this library read the files fast enough? »).
+3. It ends with its result written down: during a step, the decision goes back to the step (and to `docs/`); otherwise a decision in `docs/technical-choices.md` (kept or set aside, and why), an entry of the backlog, or a step of the roadmap that rebuilds it properly. The branch is then deleted, or kept with a line in the backlog that says why.
+
+## The tools
+
+| Tool | Use it when | Output | Done when |
+|---|---|---|---|
+| [Start a project](#start-a-project) | Once, at the start | Repository from the template, its settings, the size of the project | `main` is protected and the package has its name. |
+| [Specifications](#specifications) | The application does something new | `specs.md`, the data sources | The owner has answered the open questions and merged them. |
+| [Structure](#structure) | The commands and their options change | The structure in Excalidraw, written in `specs.md` | The owner has moved the cards and chosen a lead. |
+| [Wireframes](#wireframes) | A screen of a terminal interface | `docs/wireframes/*.excalidraw` | The owner has edited and approved the layout. |
+| [Mock-up](#mock-up) | Any visual choice of a terminal interface or an output | `docs/mockups/*.html` | Every scenario and state looks right at every size. |
+| [Design system](#design-system) | At the end of a mock-up, a new token | Design section of `specs.md` | Colors, sizes and typography are written as tokens. |
+| [Build](#build) | Always | One pull request per step | The step's box of `roadmap.md` is checked. |
+| [Release](#release) | The end of a cycle, a patch of fixes | Version tag, GitHub release | The archives are published and the README explains how to use them. |
+| [Retrospective](#retrospective) | The end of a cycle, or a tool that went badly | Changes to this file, the templates and the backlog | The lessons are written down. |
+
+## Start a project
 
 1. Create the repository from [rust-cli-template](https://github.com/aunimhsn/rust-cli-template) (see the README, **Start a new project**).
 2. Apply the pull request settings: squash merging only, branches deleted once merged.
 3. Protect `main` with a ruleset. On a free GitHub account, rulesets only apply to **public** repositories: make the repository public, or keep it private and accept that `main` is not protected.
-4. First pull request: rename the package (`Cargo.toml`, `Cargo.lock`), adapt the README, check the license, choose a port of its own for the mock-up server if the tool has a terminal interface (`docs/technical-choices.md`).
-5. Open Claude Code in the project folder. Its memory is stored per project: a new session doesn't remember a conversation held in another project. To carry context over, paste a summary of it.
-6. Check the connectors: the template turns off the claude.ai connectors (`disableClaudeAiConnectors` in `.claude/settings.json`), whose instructions and tools would be sent with every message. If the project needs one (Claude Docs, Gmail…), remove the setting; `/mcp` lists the servers that are on, and `/context` what fills the context. In the same file, `skillOverrides` hides from the model the skills the project doesn't use (still available with `/<name>`): adjust the list to the project, or use `/skills`.
+4. Size the project with the owner ([Size the project](#size-the-project)), and write the tools kept at the top of `roadmap.md`, with the steps of the first cycle.
+5. First pull request: rename the package (`Cargo.toml`, `Cargo.lock`), adapt the README, check the license, choose a port of its own for the mock-up server if the tool has a terminal interface (`docs/technical-choices.md`).
+6. Open Claude Code in the project folder. Its memory is stored per project: a new session doesn't remember a conversation held in another project. To carry context over, paste a summary of it.
+7. Check the connectors: the template turns off the claude.ai connectors (`disableClaudeAiConnectors` in `.claude/settings.json`), whose instructions and tools would be sent with every message. If the project needs one (Claude Docs, Gmail…), remove the setting; `/mcp` lists the servers that are on, and `/context` what fills the context. In the same file, `skillOverrides` hides from the model the skills the project doesn't use (still available with `/<name>`): adjust the list to the project, or use `/skills`.
 
-## 2. Specifications
+## Specifications
 
-Goal: agree on **what** the application does before deciding **how**.
+Goal: agree on **what** the application does before deciding **how**. For a change after the first cycle, only the sections it touches.
 
 1. Describe the idea in a few sentences, then let Claude Code ask its questions, in batches of a few at a time. The usual ones:
    - Who uses it, on which systems, in which languages?
@@ -45,14 +102,20 @@ Goal: agree on **what** the application does before deciding **how**.
    - Plain commands, or a terminal interface (TUI) with screens and keys?
    - Where does the data come from? Which files does it read or write?
 2. **Check the data sources early**: documentation, rate limits, terms of use, licenses of the images. Read the source code of a service when its limits aren't documented. Record the limits and every risk the owner accepts, with its date, in a note of `docs/` (e.g. `docs/<service>-usage.md`) linked from `roadmap.md`.
-3. Sketch the structure in Excalidraw when it isn't obvious: the commands and their options, the screens of a terminal interface, with the current state and two leads side by side, so that the owner moves them by hand.
-4. Write `specs.md`: behavior only (what the user sees, what each action does, edge cases, local files, error handling).
-5. Write the technical choices with their reasons (and the alternatives rejected) in `docs/technical-choices.md`, then the steps in `roadmap.md`, each small enough for one pull request. `roadmap.md` is read at every session: keep it short, with links to the notes of `docs/`.
-6. Open the pull request; the owner reads the files on GitHub (**Files changed**) or in VS Code.
+3. Write `specs.md`: behavior only (what the user sees, what each action does, edge cases, local files, error handling).
+4. Write the technical choices with their reasons (and the alternatives rejected) in `docs/technical-choices.md`, then the steps in `roadmap.md`, each small enough for one pull request. `roadmap.md` is read at every session: keep it short, with links to the notes of `docs/`.
+5. Open the pull request; the owner reads the files on GitHub (**Files changed**) or in VS Code.
 
-Phases 3 to 5 apply when the tool has a terminal interface (TUI) or a rich output to design (tables, colors, progress). A plain command skips them: its usage, its help and an example of each output go in `specs.md`, and the build starts.
+The wireframes, the mock-up and the design system apply when the tool has a terminal interface (TUI) or a rich output to design (tables, colors, progress). A plain command skips them: its usage, its help and an example of each output go in `specs.md`, and the build starts.
 
-## 3. Wireframes
+## Structure
+
+Goal: agree on how the commands, their options and the screens of a terminal interface fit together before writing them.
+
+1. Claude Code draws the structure in Excalidraw (`excalidraw-wireframes` skill): one card per command or screen, the current state and **two leads** side by side, a parking area for the items not placed yet and the open questions, so that the owner moves the cards by hand.
+2. The owner moves the cards, compares the leads, and chooses; Claude Code redraws the chosen lead, completed, and writes it in `specs.md`.
+
+## Wireframes
 
 Goal: agree on the **layout**, without colors or code, in a format the owner can edit.
 
@@ -72,7 +135,7 @@ Working with the file:
 - The VS Code extension does **not** save by itself, unlike excalidraw.com: press **Ctrl+S** before asking Claude Code to read the file.
 - The extension keeps the drawing in memory and doesn't reload the file when it changes on disk. Before Claude Code rewrites the file, save and close its tab; afterwards, reopen it, and never save the old tab over the new file.
 
-## 4. Mock-up
+## Mock-up
 
 Goal: choose the style with real content, every scenario and every state, before writing the application.
 
@@ -95,7 +158,7 @@ The `html-mockups` skill (`.claude/skills/`) carries out this phase, from a star
    then open `http://127.0.0.1:<port>/docs/mockups/<file>.html`, and reload after each change. Two projects on the same port took each other's server over.
 6. Claude Code checks its own changes with headless screenshots, kept in its scratchpad, before asking for a review, and exports one large PNG per style to `outputs/` to compare them at a glance. A test that needs extra code runs on a copy of the page, never on the file the owner has open.
 
-## 5. Design system
+## Design system
 
 Goal: write down the visual choices once, so that the application and its future screens stay consistent.
 
@@ -109,7 +172,7 @@ Write them in the design section of `specs.md` (or in `docs/design-system.md` wh
 
 The mock-up is then updated to use exactly these tokens. At the end of the phase, add an entry to [design-journal.md](design-journal.md) in the template: the choices kept, the ones rejected, and why.
 
-## 6. Build
+## Build
 
 For each step of `roadmap.md`, in order:
 
@@ -122,36 +185,20 @@ For each step of `roadmap.md`, in order:
 
 Steps that touch the user's system (clipboard, terminal, files) are verified on the owner's machine, on every target system, as early as possible in the roadmap. When a bug reaches the owner that a test could have caught, the fix adds the test.
 
-## 7. Release
+## Release
 
 1. Executable name, application icon, README (usage, help per system, services called and their risks).
 2. Version in `Cargo.toml`, tag `vX.Y.Z` on the merged commit: the release workflow publishes the archives.
 3. Commitments to third parties (e.g. tell a data provider once the releases reach a number of downloads).
 
-## 8. Retrospective
+## Retrospective
 
-After the release, or after any phase that went badly:
+At the end of each cycle (the first one ends with the first release), or after any tool that went badly:
 
 1. What took longer than expected? What had to be redone? What did the owner like most?
-2. Sort what is left: the small touches go to the « Later » list of `roadmap.md` for the polish (phase 9), the larger ideas to the same list for a next cycle (phase 10).
-3. Update this file, and the template (`CLAUDE.md`, `README.md`, the skills) when the lesson applies to every project, and the web template when it applies to it too.
-
-## 9. Polish
-
-Optional: once the version is released and the lessons written, the small touches that were noted and set aside (`roadmap.md`, Later), before anything new.
-
-1. Claude Code lists the touches of the « Later » list (a message, an option, an error case, the speed of a command), each with its cost; the owner picks the ones worth doing now.
-2. One small pull request per touch, or per group of touches on the same command, with the tests and the code review. No new command and no change of the behavior of a command here: those belong to a new cycle.
-3. The touches are released together as a patch version.
-
-## 10. Next cycle
-
-The ideas that need more than a touch (a new command, a new output format, a terminal interface, another system) make the next cycle, which runs the phases again for its own scope.
-
-1. With the owner, choose the scope of the cycle from the « Later » list and the new needs; give it a goal in one sentence.
-2. Update `specs.md` first, then write the steps of the cycle in `roadmap.md` under a heading of their own (« Cycle 2: JSON output and Windows support »), numbered after the last step: the steps of the cycles done stay as one line each.
-3. Run only the phases that apply: a new screen of a terminal interface goes through its wireframe and mock-up; a new option goes straight to the build.
-4. The cycle ends with its release (a minor or major version) and its retrospective, then polish or start the next one.
+2. Sort the backlog: the leftovers and the ideas of the cycle go in, what is done or no longer wanted goes out.
+3. Read Claude Code's memory of the project: a rule or a preference that holds for the whole project moves to `CLAUDE.md` or this file, where the next sessions and the templates find it.
+4. Update this file, and the template (`CLAUDE.md`, `README.md`, the skills) when the lesson applies to every project, and the web template when it applies to it too.
 
 ## Lessons learned
 
@@ -175,4 +222,5 @@ The ideas that need more than a touch (a new command, a new output format, a ter
 | sylent.art | A worktree outside the folder open in VS Code is invisible to the owner: work on the branch in the main folder while they test nothing there. |
 | sylent.art | Open a pull request only once the owner has seen the result (the review applied, the drawing looked at). |
 | sylent.art | Two mock-up servers of two projects on the same port broke the owner's page: one port per project, a server without cache. |
-| sylent.art | Ideas kept only in Claude Code's memory are easily lost between sessions: a « Later » list in `roadmap.md` feeds the polish and the next cycle. |
+| sylent.art | The classification of the offers ran as a mini-cycle of its own (specifications, then wireframe and mock-up, then build): the unit of the process is the change, not the project. |
+| sylent.art | Ideas kept only in Claude Code's memory are easily lost between sessions, and some wait on other people: a `backlog.md` holds them, and the roadmap only what is chosen. |
