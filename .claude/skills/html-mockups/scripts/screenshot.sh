@@ -3,10 +3,10 @@
 #
 #   screenshot.sh <url> <output.png> [width] [height]
 #
-# The page must be served (python3 -m http.server 8765 --bind 127.0.0.1 at the repository
-# root). Uses Firefox, installed normally or as a Flatpak; a throwaway profile avoids
-# disturbing a running Firefox. The display scale differs from the owner's screen: the
-# screenshot shows the direction, the owner tunes the pixels by eye.
+# The page must be served (python3 docs/mockups/serve.py <port>, from the repository root,
+# on the port of the project). Uses Firefox, installed normally or as a Flatpak; a throwaway
+# profile avoids disturbing a running Firefox. The display scale differs from the owner's
+# screen: the screenshot shows the direction, the owner tunes the pixels by eye.
 set -eu
 
 url=$1

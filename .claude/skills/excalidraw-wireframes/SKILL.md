@@ -47,7 +47,15 @@ The best results came from this loop: **the owner draws, Claude Code rearranges 
 4. One question per iteration: layout first; content and wording later.
 5. Once the main frames are agreed, draw the rest under them: the other kinds of content, the empty, loading and waiting states, the errors, the other language, the panels that open over the content.
 
-## 6. Finish
+## 6. Structures
+
+The same file format serves to sort and organize, not only to lay out screens: the commands of a tool and their options, the screens of a terminal interface and how one leads to the other, the tree of the contents of a site. Moving cards by hand makes an abstract structure concrete; the owner loved it on sylent.art.
+
+- One card per item (one group: its box and its label), the current state on the left, **two leads** side by side, a parking area for the items not placed yet, and the open questions in a corner.
+- Draw it during the specifications, **before the wireframes**: on sylent.art, the tree of the contents came after the build, and the addresses changed twice.
+- Once the owner has moved the cards and chosen a lead, write the structure in `specs.md`.
+
+## 7. Finish
 
 - Write the agreed layout in `specs.md` (window layout section: blocks, order, what each shows, breakpoints).
 - Then build the HTML mock-up from the frames (`html-mockups` skill). From then on, the mock-up is the reference; the wireframe only fixed the first layout, and `specs.md` says so.
