@@ -12,6 +12,7 @@ Template for Rust command-line applications, with the project conventions, the p
 | `design-journal.md` | The design experiences of past applications: choices kept and rejected, and why. A source of ideas, not rules. |
 | `CLAUDE.md` | Rules for Claude Code: communication, naming, language, specifications and roadmap, Git workflow, commit messages, code review, checks, releases. |
 | `.claude/agents/code-reviewer.md` | Subagent that reviews a branch before its pull request and writes its notes, in French, to `outputs/`. |
+| `.claude/agents/dependency-reviewer.md` | Subagent that reviews the open Dependabot pull requests and tells, in French, which to merge or set aside, with their links and the comments to post. |
 | `.claude/skills/excalidraw-wireframes/` | Skill: editable Excalidraw wireframes of a terminal interface, and sketches of a structure (the commands and their options), iterated with the owner (Python helpers and an SVG preview). |
 | `.claude/skills/html-mockups/` | Skill: the HTML mock-up built from the wireframe, styles and open decisions compared with tabs, then the design tokens (starting page, server without cache, headless screenshots). |
 | `specs.md` | Skeleton of the specifications: what the application does. |
