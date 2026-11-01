@@ -6,7 +6,7 @@ The process is not a straight line. Its phases are **tools**, picked for each ch
 
 This file is a living document: after each cycle, update it with what worked and what didn't (see [Retrospective](#retrospective)).
 
-![The process: the backlog feeds the roadmap; each change goes through the tools it needs to a pull request; a cycle ends with the release and the retrospective, whose leftovers go back to the backlog.](docs/process.svg)
+![The process: the backlog feeds the roadmap; each change goes through the tools it needs to a pull request; a cycle ends with the release and the retrospective, whose leftovers go back to the backlog.](docs/process-light.svg)
 
 ## How it works
 

@@ -2,16 +2,13 @@
 
 Template for Rust command-line applications, with the project conventions, the process from an idea to a release, and the Claude Code setup. Formerly `rust-project-template`; its web counterpart is [astro-static-website-template](https://github.com/aunimhsn/astro-static-website-template).
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/process.svg">
-  <img src="docs/process-light.svg" alt="The process: the backlog feeds the roadmap; each change goes through the tools it needs to a pull request; a cycle ends with the release and the retrospective.">
-</picture>
+![The process: the backlog feeds the roadmap; each change goes through the tools it needs to a pull request; a cycle ends with the release and the retrospective.](docs/process-light.svg)
 
 ## What it contains
 
 | File | Content |
 |---|---|
-| `process.md`, `docs/process.svg`, `docs/process-light.svg` | How an application goes from an idea to a release and keeps growing: a toolbox (specifications, structure, wireframes, mock-up and design system for a terminal interface, build, release, retrospective) picked for each change, a backlog and a roadmap, the urgent fixes and the explorations, with its diagram, dark and light (the README shows the light one, or the dark one when GitHub is in dark mode). |
+| `process.md`, `docs/process.svg`, `docs/process-light.svg` | How an application goes from an idea to a release and keeps growing: a toolbox (specifications, structure, wireframes, mock-up and design system for a terminal interface, build, release, retrospective) picked for each change, a backlog and a roadmap, the urgent fixes and the explorations, with its diagram, dark and light (the README and `process.md` show the light one). |
 | `design-journal.md` | The design experiences of past applications: choices kept and rejected, and why. A source of ideas, not rules. |
 | `CLAUDE.md` | Rules for Claude Code: communication, naming, language, specifications and roadmap, Git workflow, commit messages, code review, checks, releases. |
 | `.claude/agents/code-reviewer.md` | Subagent that reviews a branch before its pull request and writes its notes, in French, to `outputs/`. |
