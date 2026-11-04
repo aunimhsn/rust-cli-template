@@ -33,11 +33,18 @@ python3 docs/mockups/serve.py <port>
 
 Each time the mock-up changes, check that the page answers with the change, then give the owner `http://127.0.0.1:<port>/docs/mockups/<name>.html` with the section to look at; they reload after each change. If the page answers 404, check which project answers on the port before restarting.
 
-Before asking for a review, check each change with a headless screenshot (`scripts/screenshot.sh <url> <output.png> [width] [height]`, Firefox normal or Flatpak), kept in the scratchpad, and look at it. To compare the styles at a glance, export one large PNG per style to `outputs/`.
+Before asking for a review, check each change with a headless screenshot (`scripts/screenshot.sh <url> <output.png> [width] [height | full]`), kept in the scratchpad, and look at it. To compare the styles at a glance, export one large PNG per style to `outputs/`.
+
+The script uses **Playwright** and its own Chromium when installed, otherwise Firefox (normal or Flatpak). Prefer Playwright: it waits for the scripts to settle, captures the whole page (`full`), prints the errors of the browser console (scripts, missing files) and fails on them, which a screenshot alone doesn't show. It is also the only choice when Claude Code runs in a sandbox that doesn't see the browsers of the system, such as VS Code installed as a Flatpak. It checks the mock-up page only, whatever the kind of application. Install it once, outside the projects (about 150 MB):
+
+```sh
+mkdir -p ~/.local/share/mockup-tools && cd ~/.local/share/mockup-tools
+npm init -y && npm install playwright && npx playwright install chromium
+```
 
 - A test that needs extra code (a delay, a simulated click) runs on a copy of the page (`docs/mockups/test-*.html`, deleted after), never on the file the owner has open: they reload it at any time. Stop the helper servers by their PID, never with `pkill -f` and a pattern that also matches the shell's own command.
 - A headless browser renders without the GPU: a color or WebGL bug the owner reports doesn't show in a screenshot. Build a small test page of variants and ask the owner to name the wrong ones.
-- `firefox --screenshot` shoots before the scripts settle: an animation is measured or shot with a headless browser driven by a script.
+- `firefox --screenshot` shoots before the scripts settle: an animation is measured or shot with Playwright, driven by a small script of its own (see `scripts/screenshot.cjs`).
 
 ## 3. Iterate with the owner
 
