@@ -27,7 +27,7 @@ At the setup, Claude Code asks how large the project is and proposes the tools a
 
 ## Size a change
 
-At the start of each step, Claude Code says which tools the change needs, and why; the owner may add or remove one.
+At the start of each step, Claude Code says which tools the change needs, and why, and how many pull requests it expects; the owner may add or remove one. The expected number of pull requests is written with the step in `roadmap.md`, so that the retrospective can compare it with what happened.
 
 | Change | Tools |
 |---|---|
@@ -64,22 +64,24 @@ A fix that can't wait (a crash, a security alert, data written to the wrong plac
 An idea that needs trying before deciding (a library, a terminal interface, a faster algorithm) is an exploration, not a step. It happens at any time: during a step, when a choice needs trying before it is made (on sylent.art, whether a 3D scene runs on a phone, during the mock-up); or between steps, from an idea of the backlog (the launch videos).
 
 1. A branch `explore/<short-description>`, or a program in the scratchpad: nothing of it is merged as it is.
-2. Bounded: the owner and Claude Code agree on what it must answer (« does this library read the files fast enough? »).
+2. Bounded twice: the owner and Claude Code agree on what it must answer, with a measure when there is one (« does this library read 10 000 files in under a second? »), and on how long it may take (one session, two at most). When the time is up, it stops and the decision is taken with what is known: a question still open is an answer too.
 3. It ends with its result written down: during a step, the decision goes back to the step (and to `docs/`); otherwise a decision in `docs/technical-choices.md` (kept or set aside, and why), an entry of the backlog, or a step of the roadmap that rebuilds it properly. The branch is then deleted, or kept with a line in the backlog that says why.
 
 ## The tools
 
+Each tool has a **done when**: a list of facts anyone can check, not an impression. When one of them can't be met (no Windows machine to try a step on), the owner decides to go on anyway, and the gap is written in `roadmap.md` or in the backlog, never left unsaid.
+
 | Tool | Use it when | Output | Done when |
 |---|---|---|---|
-| [Start a project](#start-a-project) | Once, at the start | Repository from the template, its settings, the size of the project | `main` is protected and the package has its name. |
-| [Specifications](#specifications) | The application does something new | `specs.md`, the data sources | The owner has answered the open questions and merged them. |
-| [Structure](#structure) | The commands and their options change | The structure in Excalidraw, written in `specs.md` | The owner has moved the cards and chosen a lead. |
-| [Wireframes](#wireframes) | A screen of a terminal interface | `docs/wireframes/*.excalidraw` | The owner has edited and approved the layout. |
-| [Mock-up](#mock-up) | Any visual choice of a terminal interface or an output | `docs/mockups/*.html` | Every scenario and state looks right at every size. |
-| [Design system](#design-system) | At the end of a mock-up, a new token | Design section of `specs.md` | Colors, sizes and typography are written as tokens. |
-| [Build](#build) | Always | One pull request per step | The step's box of `roadmap.md` is checked. |
-| [Release](#release) | The end of a cycle, a patch of fixes | Version tag, GitHub release | The archives are published and the README explains how to use them. |
-| [Retrospective](#retrospective) | The end of a cycle, or a tool that went badly | Changes to this file, the templates and the backlog | The lessons are written down. |
+| [Start a project](#start-a-project) | Once, at the start | Repository from the template, its settings, the size of the project | `main` is protected, the package has its name, the size of the project is written in `roadmap.md`, and the CI is green on the setup pull request. |
+| [Specifications](#specifications) | The application does something new | `specs.md`, the data sources | Every open question is answered; the version has its success criteria; every command and option it touches has its acceptance examples and exit codes; the owner has merged them. |
+| [Structure](#structure) | The commands and their options change | The structure in Excalidraw, written in `specs.md` | The owner has moved the cards and chosen a lead; the parking area is empty (every item placed or sent to the backlog); the chosen lead is in `specs.md`. |
+| [Wireframes](#wireframes) | A screen of a terminal interface | `docs/wireframes/*.excalidraw` | The owner has approved every screen at the minimum terminal size and a wide one, with its empty, loading and error states. |
+| [Mock-up](#mock-up) | Any visual choice of a terminal interface or an output | `docs/mockups/*.html` | Every scenario and state of the specifications is shown at the minimum terminal size and a wide one, with and without colors, in a dark and a light terminal theme; no open decision is left on the page; the owner has chosen. |
+| [Design system](#design-system) | At the end of a mock-up, a new token | Design section of `specs.md` | Every color, width and symbol of the mock-up is a named token, with its fallback without colors and without Unicode; the mock-up uses only these tokens. |
+| [Build](#build) | Always | One pull request per step | The checks and the CI are green; the acceptance examples of the step pass as tests; the review notes the owner chose are applied; `specs.md` matches the behavior; the owner has tried it (on every target system for a step that touches the system); the step's box of `roadmap.md` is checked and the pull request merged. |
+| [Release](#release) | The end of a cycle, a patch of fixes | Version tag, GitHub release | The version follows the rules of [Release](#release); the archives and `SHA256SUMS.txt` are published; one archive downloaded from the release runs (`--version`, `--help`) on each system the owner has; the README explains how to install and use it. |
+| [Retrospective](#retrospective) | The end of a cycle, or a tool that went badly | Changes to this file, the templates and the backlog | The success criteria of the version are checked one by one; the planned and actual pull requests are compared; the backlog is sorted; each lesson is written where it applies (this file, `CLAUDE.md`, the templates). |
 
 ## Start a project
 
@@ -101,12 +103,36 @@ Goal: agree on **what** the application does before deciding **how**. For a chan
    - Which commands, options and arguments? What does each print, and in which formats (text, JSON)?
    - Plain commands, or a terminal interface (TUI) with screens and keys?
    - Where does the data come from? Which files does it read or write?
+   - Is it run by a person, by a script, or both? A script reads the output and the exit code: they become a contract.
+   - When is this version a success? Two or three facts the owner can check after the release (« it replaces my shell script for the weekly export », « it reads a year of logs in under 5 seconds », « it runs on Windows and Linux »).
 2. **Check the data sources early**: documentation, rate limits, terms of use, licenses of the images. Read the source code of a service when its limits aren't documented. Record the limits and every risk the owner accepts, with its date, in a note of `docs/` (e.g. `docs/<service>-usage.md`) linked from `roadmap.md`.
-3. Write `specs.md`: behavior only (what the user sees, what each action does, edge cases, local files, error handling).
-4. Write the technical choices with their reasons (and the alternatives rejected) in `docs/technical-choices.md`, then the steps in `roadmap.md`, each small enough for one pull request. `roadmap.md` is read at every session: keep it short, with links to the notes of `docs/`.
-5. Open the pull request; the owner reads the files on GitHub (**Files changed**) or in VS Code.
+3. Write `specs.md`: behavior only (what the user sees, what each action does, edge cases, local files, error handling), the success criteria of the version, and the requirements that aren't features (the target systems, the speed on a given volume of data, the size of the executable, if they matter).
+4. Give each command and option its **acceptance examples**: a command line, what it receives (files, input, environment), and what it must give (the output, or its first lines, and the exit code), including the errors.
+
+   ```text
+   $ tool count notes.txt          → prints « 42 lines », exit code 0
+   $ tool count missing.txt        → prints on stderr « missing.txt: file not found », exit code 2
+   $ tool count notes.txt --json   → prints {"lines":42}, exit code 0
+   ```
+
+   They are what the owner validates, and each one becomes a test of the build (an integration test that runs the executable): the specifications and the tests then say the same thing.
+5. Write the technical choices with their reasons (and the alternatives rejected) in `docs/technical-choices.md`, then the steps in `roadmap.md`, each small enough for one pull request. `roadmap.md` is read at every session: keep it short, with links to the notes of `docs/`.
+6. Open the pull request; the owner reads the files on GitHub (**Files changed**) or in VS Code.
 
 The wireframes, the mock-up and the design system apply when the tool has a terminal interface (TUI) or a rich output to design (tables, colors, progress). A plain command skips them: its usage, its help and an example of each output go in `specs.md`, and the build starts.
+
+### Command-line conventions
+
+What users and scripts expect of any command-line tool. The specifications answer each point once, in `specs.md`, and a later change only says when it departs from them:
+
+- **Exit codes**: 0 on success, a non-zero code per kind of failure (e.g. 1 for an error, 2 for a wrong usage), listed in `specs.md` and never changed once released.
+- **Output and errors**: the result goes to stdout, the messages, warnings and progress to stderr, so that `tool … > file` and pipes keep only the result.
+- **Terminal or pipe**: colors, progress bars and prompts appear only when the output is a terminal; piped, the output stays plain, and nothing waits for a key.
+- **Colors**: `--color auto|always|never`, and the `NO_COLOR` variable respected; a meaning is never carried by color alone (a symbol or a word goes with it).
+- **Help and version**: `--help` with an example per command, `--version`; shell completions and a man page if the tool has several commands.
+- **Files**: the configuration, the data and the cache in the folders of each system (XDG on Linux, `~/Library` on macOS, `%APPDATA%` on Windows), written in `specs.md` (Local files); a file is written atomically, never left half-written.
+- **Machine-readable output**: a `--json` output, if any, is a contract like the options: a field may be added, but removing or renaming one is a breaking change (see [Release](#release)).
+- **Interruption**: Ctrl+C stops cleanly, leaves no temporary file, and restores the terminal of a terminal interface.
 
 ## Structure
 
@@ -128,7 +154,7 @@ The `excalidraw-wireframes` skill (`.claude/skills/`) carries out this phase: it
 5. Once the main frames are agreed, Claude Code draws the rest under them: other kinds of content, empty, loading and waiting states, errors, the other language.
 6. Claude Code writes the agreed layout in `specs.md`.
 
-For a responsive interface, start with the narrowest layout (mobile first): it forces to choose the essential, and the wider layouts then only rearrange the same blocks. Draw the panels that open over the content (settings) too.
+Sizes are counted in columns and rows, not pixels. Start with the smallest terminal the application supports (e.g. 80 columns by 24 rows, written in `specs.md`): it forces to choose the essential, and the wider layouts then only rearrange the same blocks. Draw what the application shows when the terminal is smaller than that, and the panels that open over the content (settings, help) too.
 
 Working with the file:
 
@@ -142,13 +168,13 @@ Goal: choose the style with real content, every scenario and every state, before
 The `html-mockups` skill (`.claude/skills/`) carries out this phase, from a starting page with the style and decision tabs, and a headless screenshot script.
 
 1. One self-contained HTML page in `docs/mockups/`, built from the approved wireframe: every frame of the wireframe becomes a window, with sample data close to real ones.
-2. **Several styles on the same page, 3 or 4**, each with its own fonts, colors and density, switched with **tabs at the top of the page**. The address keeps the chosen style (e.g. `?theme=slate`) to share it. Each style only sets tokens (CSS variables); the components use them all, so that a style is cheap to add or tweak.
+2. **Several styles on the same page, 3 or 4**, each with its own colors, borders, symbols and density, switched with **tabs at the top of the page**. The address keeps the chosen style (e.g. `?theme=slate`) to share it. Each style only sets tokens (CSS variables); the components use them all, so that a style is cheap to add or tweak.
    - The styles explore **new directions** for this application, its users and its subject. [design-journal.md](design-journal.md) records the past experiences: it may inspire one of the styles, never all of them, and nothing in it is a default.
 3. The owner picks a style, or mixes two; iterate on it alone, one change at a time (e.g. the main color, then the logo, then the font).
    - **Each open decision gets its own control** on the page, so that the owner compares on screen; once decided, it is removed and the choice is kept: tabs for a few distinct variants (e.g. two button styles, three header variants, five offsets), lists that apply at once for values that combine (e.g. a font per role), sliders for values tuned by eye (e.g. a width, an angle). The address keeps the choices, so that the owner can send them back, an important element is shown alone and in real conditions, and the proposals are numbered once across every series.
    - **Pixel alignments are tuned by eye on the owner's real screen**, with a tab of offsets: the display scale differs from the headless screenshots, which only give the direction.
    - From then on, **the mock-up is the reference** of the interface; the wireframe only fixed the first layout.
-4. Use fonts that can be embedded in the application (e.g. SIL Open Font License). Preload the font files, so that the page, and its screenshots, only finish loading once the fonts are there.
+4. The mock-up shows a terminal, and the application doesn't choose the font of the terminal: draw on a grid of cells, with a common monospace font, every block sized in columns and rows (CSS `ch` units and a fixed line height), the colors among those a terminal shows (the 16 named colors first, which follow the user's theme), and only the styles terminals support (bold, dim, underline, reverse; italic is not everywhere). A switch shows each window without colors (`NO_COLOR`) and in a dark and a light terminal theme. A styled font is only for a logo in the README, never for the interface.
 5. Serve the repository root without cache, on the port of the project (`docs/technical-choices.md`), so that the page reaches the files of the repository (icons and logo in `assets/`), even in a sandboxed browser (Flatpak, Snap) that only receives the HTML file, and a reload never mixes old and new files:
 
    ```sh
@@ -164,10 +190,11 @@ Goal: write down the visual choices once, so that the application and its future
 
 Write them in the design section of `specs.md` (or in `docs/design-system.md` when they grow), as named tokens:
 
-- **Colors**: background, panels, borders, text, weak text, accent, warning, error, success; the colors of the domain (e.g. item rarities); dark and light themes if needed.
-- **Sizes**: a spacing scale (e.g. 4, 8, 12, 16, 24 px), corner radius, the breakpoints, minimum window size.
-- **Typography**: fonts, sizes per role (title, body, caption, large number), weights, number formatting per language.
-- **Icons and images**: where they come from, their license, what is bundled in `assets/` (with an `assets/NOTICE.md` for images that aren't under the project license) and what is loaded at runtime.
+- **Colors**: background, panels, borders, text, weak text, accent, warning, error, success; the colors of the domain (e.g. item rarities). Each token names its terminal color (one of the 16 named colors, or a 256-color or true-color value with the named color it falls back to), is readable on a dark and on a light terminal theme, and has its form without colors (a symbol, bold, reverse).
+- **Sizes**, in columns and rows: the minimum terminal size, the margins and gaps in cells, the widths at which the layout changes, the width of the columns of a table and what is cut first (with `…`) when the terminal is narrow.
+- **Text styles**: what is bold, dim, underlined or reversed, per role (title, selection, key hint, weak text), and the number formatting per language.
+- **Symbols**: the Unicode symbols and box-drawing characters used (borders, ✓ ✗, arrows, spinner), each with its ASCII fallback for a terminal that can't show them.
+- **Icons and images**: the icon of the executable, the images of the README, where they come from, their license, what is bundled in `assets/` (with an `assets/NOTICE.md` for images that aren't under the project license).
 - **Tone of the messages**: formal or informal address, length, how errors are worded.
 
 The mock-up is then updated to use exactly these tokens. At the end of the phase, add an entry to [design-journal.md](design-journal.md) in the template: the choices kept, the ones rejected, and why.
@@ -185,32 +212,44 @@ For each step of `roadmap.md`, in order:
 
 Steps that touch the user's system (clipboard, terminal, files) are verified on the owner's machine, on every target system, as early as possible in the roadmap. When a bug reaches the owner that a test could have caught, the fix adds the test.
 
+What the tests cover, at least:
+
+- Every acceptance example of `specs.md` touched by the step, as an integration test that runs the executable and checks its output and its exit code.
+- The rules of [Command-line conventions](#command-line-conventions) that the step touches: plain output when piped, `NO_COLOR`, the errors on stderr.
+- The logic apart from the terminal (parsing, computing, formatting) as unit tests, so that a test never needs a real terminal.
+- A requirement of speed written in `specs.md` is measured on its volume of data before the step is done, not after the release.
+
 ## Release
 
-1. Executable name, application icon, README (usage, help per system, services called and their risks).
-2. Version in `Cargo.toml`, tag `vX.Y.Z` on the merged commit: the release workflow publishes the archives.
-3. Commitments to third parties (e.g. tell a data provider once the releases reach a number of downloads).
+1. Executable name, application icon, README (how to install, usage, help per system, services called and their risks).
+2. Choose the version ([Semantic Versioning](https://semver.org/)): **patch** for fixes only; **minor** for a new command, option or field that changes nothing existing; **major** (or minor before 1.0) for a breaking change: an option removed or renamed, an exit code or a JSON field changed, a configuration file that must be migrated. The `!` commits of the cycle (Conventional Commits) point to the breaking changes.
+3. Check the dependencies: the Dependabot pull requests reviewed (`dependency-reviewer`), and no known vulnerability (`cargo audit`, installed once with `cargo install cargo-audit`).
+4. Version in `Cargo.toml`, tag `vX.Y.Z` on the merged commit: the release workflow builds the archives, `SHA256SUMS.txt` and the release notes, generated from the pull requests of the cycle.
+5. Reread the release notes on GitHub: a short summary at the top for the users, and the breaking changes, with what to do, first.
+6. Download one archive from the release, check it against `SHA256SUMS.txt`, and run `--version` and `--help` on each system the owner has: the release is what the users get, not the build of the owner's machine.
+7. Commitments to third parties (e.g. tell a data provider once the releases reach a number of downloads).
+
+A release that went wrong is not deleted once someone may have downloaded it: the fix comes as the next patch version.
 
 ## Retrospective
 
 At the end of each cycle (the first one ends with the first release), or after any tool that went badly:
 
-1. What took longer than expected? What had to be redone? What did the owner like most?
-2. Sort the backlog: the leftovers and the ideas of the cycle go in, what is done or no longer wanted goes out.
-3. Read Claude Code's memory of the project: a rule or a preference that holds for the whole project moves to `CLAUDE.md` or this file, where the next sessions and the templates find it.
-4. Update this file, and the template (`CLAUDE.md`, `README.md`, the skills) when the lesson applies to every project, and the web template when it applies to it too.
+1. Check the success criteria of the version, one by one: met, not met (and why), or not measurable yet (and when it will be). A criterion not met becomes a backlog entry, or is dropped on purpose.
+2. Compare the pull requests expected for each step with those it took: what took longer than expected? What had to be redone? What did the owner like most?
+3. Sort the backlog: the leftovers and the ideas of the cycle go in, what is done or no longer wanted goes out.
+4. Read Claude Code's memory of the project: a rule or a preference that holds for the whole project moves to `CLAUDE.md` or this file, where the next sessions and the templates find it.
+5. Update this file, and the template (`CLAUDE.md`, `README.md`, the skills) when the lesson applies to every project, and the web template when it applies to it too: a lesson about the process goes to [Lessons learned](#lessons-learned), a trap of a tool or of the environment to [Known pitfalls](#known-pitfalls).
 
 ## Lessons learned
+
+The lessons about the process, from the previous projects: each one changed a rule of this file.
 
 | Project | Lesson |
 |---|---|
 | rust-exile-market | Coded mock-ups were never exactly what the owner wanted: start with editable wireframes. |
 | rust-exile-market | Read the terms of use of every data source during the specifications: a forbidden API changes the scope of version 1. |
-| rust-exile-market | A Flatpak browser only receives the opened file: serve the repository with `python3 -m http.server`. |
-| rust-exile-market | In the VS Code Flatpak, `~/.cargo/bin` is not on the `PATH` of the terminal: prepend it. |
-| rust-exile-market | On a free GitHub account, rulesets only protect public repositories. |
 | rust-exile-market | The owner draws, Claude Code rearranges and completes: the wireframe iterations made the interface personal. |
-| rust-exile-market | The VS Code Excalidraw extension neither autosaves nor reloads a file changed on disk: save, close, reopen. |
 | rust-exile-market | Mock-ups got much better once the layout was settled: one question per phase (layout, then style). |
 | rust-exile-market | Three styles on one page with tabs made the choice easy; the main color stays white so that colors keep their meaning (item rarities). |
 | rust-exile-market | One tab group per open decision, removed once decided, turned about a hundred small decisions into quick on-screen comparisons. |
@@ -221,9 +260,20 @@ At the end of each cycle (the first one ends with the first release), or after a
 | sylent.art | The checks born from a bug kept it from coming back: when a bug reaches the owner, the fix adds the test. |
 | sylent.art | A worktree outside the folder open in VS Code is invisible to the owner: work on the branch in the main folder while they test nothing there. |
 | sylent.art | Open a pull request only once the owner has seen the result (the review applied, the drawing looked at). |
-| sylent.art | Two mock-up servers of two projects on the same port broke the owner's page: one port per project, a server without cache. |
 | sylent.art | The classification of the offers ran as a mini-cycle of its own (specifications, then wireframe and mock-up, then build): the unit of the process is the change, not the project. |
 | sylent.art | Ideas kept only in Claude Code's memory are easily lost between sessions, and some wait on other people: a `backlog.md` holds them, and the roadmap only what is chosen. |
-| stepwise | Claude Code in VS Code installed as a Flatpak couldn't see Firefox, so the drawings of a mock-up were checked without their page; Playwright and its own Chromium now take the screenshots and report the errors of the browser console. |
 | stepwise | Twenty fixed boards of fonts couldn't show the combinations: one list per role at the top of the page, applied at once and kept in the address, made the mock-up something the owner tunes themselves. |
 | stepwise | Two series of proposals, one numbered and one lettered, led to a misunderstanding on "the B" and a whole iteration lost: number the proposals once, across every series. |
+
+## Known pitfalls
+
+The traps of the tools and of the environment met on the previous projects, with their fix. They don't change the process; they save a session.
+
+| Project | Pitfall and fix |
+|---|---|
+| rust-exile-market | A Flatpak browser only receives the opened file: serve the repository with `python3 -m http.server`. |
+| rust-exile-market | In the VS Code Flatpak, `~/.cargo/bin` is not on the `PATH` of the terminal: prepend it. |
+| rust-exile-market | On a free GitHub account, rulesets only protect public repositories. |
+| rust-exile-market | The VS Code Excalidraw extension neither autosaves nor reloads a file changed on disk: save, close, reopen. |
+| sylent.art | Two mock-up servers of two projects on the same port broke the owner's page: one port per project, a server without cache. |
+| stepwise | Claude Code in VS Code installed as a Flatpak couldn't see Firefox, so the drawings of a mock-up were checked without their page; Playwright and its own Chromium now take the screenshots and report the errors of the browser console. |

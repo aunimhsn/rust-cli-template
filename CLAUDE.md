@@ -117,6 +117,7 @@ Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.
   - `cargo test --all-features`
 - The same checks run in CI (`.github/workflows/ci.yml`) on every pull request.
 - When a bug reaches the owner that a test or a check could have caught, add it in the same pull request as the fix.
+- Every acceptance example of `specs.md` (a command line, its output and its exit code) that a step touches becomes an integration test that runs the executable, in the same pull request; a step is done only when the facts of its **done when** in `process.md` (The tools) hold.
 - When Claude Code runs in an editor installed as a Flatpak (no access to the owner's desktop: X11, other applications), a check that must run on the desktop (a probe of the windows, of the keyboard or of the pointer) is built in the scratchpad, copied to `~/.cache/<probe>/`, and run with `flatpak-spawn --host <path of the probe>`, outside the sandbox of Claude Code. Ask the owner to allow only that command in `.claude/settings.local.json` (`"Bash(flatpak-spawn --host <path of the probe>:*)"`, never committed), rather than giving the editor access to X11 for good. Warn the owner before each run, and say what they must do in the meantime.
 - `unsafe` code is forbidden and Clippy pedantic lints are enabled (see `[lints]` in `Cargo.toml`).
 - `rust-version` in `Cargo.toml` is the minimum Rust version: CI also builds with it. Raise it when a dependency or a language feature needs a newer Rust.

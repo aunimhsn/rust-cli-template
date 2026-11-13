@@ -18,7 +18,7 @@ Read only by the steps that need them:
 
 <!--
 One line per step, small enough to be reviewed in one pull request, naming the tools it needs (process.md, Size a change), for example:
-- [ ] **1. Config and local files** (specifications, build): read and write `config.toml`.
+- [ ] **1. Config and local files** (specifications, build; 1 pull request expected): read and write `config.toml`.
 A later cycle adds its steps under a heading of its own (« Cycle 2: JSON output and Windows support »), numbered after the last one.
 -->
 
