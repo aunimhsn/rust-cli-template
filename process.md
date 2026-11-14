@@ -1,6 +1,6 @@
 # Process
 
-How a command-line application goes from an idea to a release, then keeps growing, with Claude Code. Its web counterpart is [astro-static-website-template](https://github.com/aunimhsn/astro-static-website-template/blob/main/process.md): a lesson that applies to every project goes to both.
+How a command-line application goes from an idea to a release, then keeps growing, with Claude Code. Its web counterpart is [ts-astro-static-website-template](https://github.com/sylent-dev/ts-astro-static-website-template/blob/main/process.md): a lesson that applies to every project goes to both.
 
 The process is not a straight line. Its phases are **tools**, picked for each change according to what it needs: a new option goes straight to the build, a new screen of a terminal interface goes through its wireframe and mock-up first. What is not being done lives in a **backlog**; what is chosen goes to the **roadmap**, one pull request per step. Each tool ends with something the owner validates, from the cheapest to the most expensive: changing a sentence in the specifications costs less than changing a wireframe, which costs less than changing code.
 
@@ -85,7 +85,7 @@ Each tool has a **done when**: a list of facts anyone can check, not an impressi
 
 ## Start a project
 
-1. Create the repository from [rust-cli-template](https://github.com/aunimhsn/rust-cli-template) (see the README, **Start a new project**).
+1. Create the repository from [rust-cli-template](https://github.com/sylent-dev/rust-cli-template) (see the README, **Start a new project**).
 2. Apply the pull request settings: squash merging only, branches deleted once merged.
 3. Protect `main` with a ruleset. On a free GitHub account, rulesets only apply to **public** repositories: make the repository public, or keep it private and accept that `main` is not protected.
 4. Size the project with the owner ([Size the project](#size-the-project)), and write the tools kept at the top of `roadmap.md`, with the steps of the first cycle.
