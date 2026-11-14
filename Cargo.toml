@@ -6,7 +6,7 @@ rust-version = "1.93"
 description = "Template for Rust applications (command-line, desktop or web)."
 authors = ["Aunim HASSAN"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/aunimhsn/rust-project-template"
+repository = "https://github.com/sylent-dev/rust-cli-template"
 readme = "README.md"
 
 [dependencies]

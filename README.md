@@ -1,6 +1,6 @@
 # rust-cli-template
 
-Template for Rust command-line applications, with the project conventions, the process from an idea to a release, and the Claude Code setup. Formerly `rust-project-template`; its web counterpart is [astro-static-website-template](https://github.com/aunimhsn/astro-static-website-template).
+Template for Rust command-line applications, with the project conventions, the process from an idea to a release, and the Claude Code setup. Formerly `rust-project-template`; its web counterpart is [ts-astro-static-website-template](https://github.com/sylent-dev/ts-astro-static-website-template).
 
 ![The process: the backlog feeds the roadmap; each change goes through the tools it needs to a pull request; a cycle ends with the release and the retrospective.](docs/process-light.svg)
 
@@ -32,7 +32,7 @@ Template for Rust command-line applications, with the project conventions, the p
 1. Create the repository from this template, with the **Use this template** button or:
 
    ```sh
-   gh repo create <name> --template aunimhsn/rust-cli-template --private --clone
+   gh repo create <name> --template sylent-dev/rust-cli-template --private --clone
    ```
 
 2. In `Cargo.toml`, update `name`, `description` and `repository` (add `keywords` and `categories` if the crate is published), then run `cargo build` to update `Cargo.lock`.

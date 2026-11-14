@@ -6,7 +6,7 @@ One entry per application: the design choices made with the owner, the ones reje
 
 ## rust-exile-market (2026-10)
 
-A small desktop window, a companion to Path of Exile 2, that prices a copied item ([mock-up](https://github.com/aunimhsn/rust-exile-market/blob/main/docs/mockups/narrow-styles.html), [specs](https://github.com/aunimhsn/rust-exile-market/blob/main/specs.md)).
+A small desktop window, a companion to Path of Exile 2, that prices a copied item ([mock-up](https://github.com/sylent-dev/rust-exile-market/blob/main/docs/mockups/narrow-styles.html), [specs](https://github.com/sylent-dev/rust-exile-market/blob/main/specs.md)).
 
 ### Context
 
@@ -48,7 +48,7 @@ A small desktop window, a companion to Path of Exile 2, that prices a copied ite
 
 ## sylent.art (2026-10)
 
-The static website of a freelance trainer in software development, for schools, training organizations and companies ([mock-up](https://github.com/aunimhsn/sylent.art/tree/main/docs/mockups), [branding and tokens](https://github.com/aunimhsn/sylent.art/blob/main/docs/branding.md), [specs](https://github.com/aunimhsn/sylent.art/blob/main/specs.md)).
+The static website of a freelance trainer in software development, for schools, training organizations and companies ([mock-up](https://github.com/sylent-dev/sylent.art/tree/main/docs/mockups), [branding and tokens](https://github.com/sylent-dev/sylent.art/blob/main/docs/branding.md), [specs](https://github.com/sylent-dev/sylent.art/blob/main/specs.md)).
 
 ### Context
 
