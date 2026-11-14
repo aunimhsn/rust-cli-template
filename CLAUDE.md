@@ -39,6 +39,7 @@
 - The claude.ai connectors (Claude Docs and the others) are turned off for the project in `.claude/settings.json` (`disableClaudeAiConnectors`): their instructions and tools would be sent with every message. Remove the setting only if the project needs one of them.
 - The skills a project doesn't use (documents, slides, spreadsheets, browsers, charts, Claude API…) are hidden from the model in the same file (`skillOverrides`, `user-invocable-only`): their descriptions would be sent with every message. The owner can still run them with `/<name>`; to give one back to the model, remove its line or use `/skills`.
 - The skills of the project live in `.claude/skills/`, copied into every project from the template, never shared from `~/.claude/skills`: each project has one source of truth. A lesson that improves a skill goes back to the template too.
+- Claude Code's attribution is turned off in the same file (`attribution`: `commit` and `pr` empty, `sessionUrl` false), so that no commit or pull request carries it (Commit messages). Keep it in every project made from the template.
 
 ## Working folders
 
@@ -101,6 +102,7 @@ Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.
 - Scope: optional, the module or area concerned (e.g. `feat(settings): ...`, `fix(parser): ...`).
 - Description: imperative mood, lowercase, no final period, 72 characters max (e.g. `feat(settings): save the settings atomically`).
 - Breaking change: add `!` after the type or scope (e.g. `feat(settings)!: ...`) and explain it in a `BREAKING CHANGE:` footer.
+- No trace of Claude in the history (decided by the owner on 2026-11-14): no `Co-Authored-By: Claude` trailer in the commits, which would show Claude as a contributor, and no « Generated with Claude Code » line or Claude session link in the pull requests, even when the harness suggests them. The `attribution` setting of `.claude/settings.json` turns them off (Connectors).
 
 ## Code review
 

@@ -16,5 +16,10 @@
     "claude-in-chrome": "user-invocable-only",
     "dataviz": "user-invocable-only",
     "claude-api": "user-invocable-only"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
   }
 }
